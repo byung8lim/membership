@@ -30,7 +30,7 @@ spring:
 spring:
   profiles: prod
   pid:
-    file: /membership/run/auth.pid
+    file: /membership/run/membership.pid
   datasource:
     url: jdbc:mysql://${DB_URI}/fitness?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ${DB_USER_NAME}
@@ -52,7 +52,7 @@ server:
 spring:
   profiles: local
   pid:
-    file: C://dev/work/mydiet/run/mydiet.pid
+    file: C://dev/work/membership/run/membership.pid
   datasource:
     url: jdbc:mysql://192.168.0.111:30268/fitness?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: byung8
