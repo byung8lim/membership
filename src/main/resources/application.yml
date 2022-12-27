@@ -62,7 +62,7 @@ logging:
   config: classpath:logback-local.xml
 log:
   file:
-    path: "E://dev/work/membership/logs"
+    path: "C://dev/work/membership/logs"
 server:
   port: 8084
   servlet:

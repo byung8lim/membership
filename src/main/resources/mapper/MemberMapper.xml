@@ -11,50 +11,14 @@
 		  #{email}, #{name}, #{genderId}
 		, #{birthday}, #{height}, #{password})
 	</insert>
-<!-- 
-mysql> desc TB_FS_MEMBER
-    -> ;
-+-------------+--------------+------+-----+-------------------+-----------------------------+
-| Field       | Type         | Null | Key | Default           | Extra                       |
-+-------------+--------------+------+-----+-------------------+-----------------------------+
-| MBR_ID      | varchar(10)  | NO   | PRI | NULL              |                             |
-| MBR_NM      | varchar(50)  | NO   |     | NULL              |                             |
-| MBR_EMLADDR | varchar(50)  | YES  | UNI | NULL              |                             |
-| MBR_GNDR_ID | varchar(10)  | YES  |     | NULL              |                             |
-| BRTH_DAY    | varchar(8)   | YES  |     | NULL              |                             |
-| HEIGHT      | int          | YES  |     | NULL              |                             |
-| ROLE_ID     | varchar(10)  | NO   |     | NULL              |                             |
-| PASSWORD    | varchar(256) | YES  |     | NULL              |                             |
-| USE_YN      | char(1)      | YES  |     | Y                 |                             |
-| REG_DT      | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED           |
-| UDP_DT      | datetime     | YES  |     | NULL              | on update CURRENT_TIMESTAMP |
-+-------------+--------------+------+-----+-------------------+-----------------------------+
-11 rows in set (0.00 sec)
-
-mysql> describe TB_CMM_CD
-    -> ;
-+---------------+---------------+------+-----+-------------------+-----------------------------+
-| Field         | Type          | Null | Key | Default           | Extra                       |
-+---------------+---------------+------+-----+-------------------+-----------------------------+
-| CMM_CD_ID     | varchar(10)   | NO   | PRI | NULL              |                             |
-| CMM_CD        | char(2)       | NO   |     | NULL              |                             |
-| CMM_CD_NM_ENG | varchar(100)  | YES  |     | NULL              |                             |
-| CMM_CD_NM     | varchar(100)  | YES  |     | NULL              |                             |
-| GRP_CD        | char(2)       | NO   |     | NULL              |                             |
-| CMM_CD_DTL    | varchar(1000) | YES  |     | NULL              |                             |
-| USE_YN        | char(1)       | YES  |     | Y                 |                             |
-| REG_DT        | datetime      | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED           |
-| UDP_DT        | datetime      | YES  |     | NULL              | on update CURRENT_TIMESTAMP |
-+---------------+---------------+------+-----+-------------------+-----------------------------+
-
- -->	
+	
 	<select id="findMemberByEmail" parameterType="java.lang.String" resultType="com.byung8.common.domain.Member">
 		SELECT
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
 		 ,a.PASSWORD as password
@@ -71,8 +35,8 @@ mysql> describe TB_CMM_CD
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
 		 ,a.PASSWORD as password
@@ -84,13 +48,13 @@ mysql> describe TB_CMM_CD
 		AND a.MBR_NM = '${value}'
 	</select>
 	
-	<select id="findMemberById" parameterType="int" resultType="com.byung8.common.domain.Member">
+	<select id="findMemberById" parameterType="java.lang.String" resultType="com.byung8.common.domain.Member">
 		SELECT
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
 		 ,a.PASSWORD as password
@@ -99,7 +63,7 @@ mysql> describe TB_CMM_CD
 		 ,a.UDP_DT as udpDt
 		FROM TB_FS_MEMBER a
 		WHERE a.USE_YN='Y'
-		AND a.MBR_ID = ${value}
+		AND a.MBR_ID = '${value}'
 	</select>
 	
 	<select id="findMemberListByEmail" parameterType="java.lang.String" resultType="com.byung8.common.domain.Member">
@@ -107,11 +71,11 @@ mysql> describe TB_CMM_CD
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
-		 ,NULL as password
+		 ,a.PASSWORD as password
 		 ,a.USE_YN as useYn
 		 ,a.REG_DT as regDt
 		 ,a.UDP_DT as udpDt
@@ -125,11 +89,11 @@ mysql> describe TB_CMM_CD
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
-		 ,NULL as password
+		 ,a.PASSWORD as password
 		 ,a.USE_YN as useYn
 		 ,a.REG_DT as regDt
 		 ,a.UDP_DT as udpDt
@@ -143,11 +107,11 @@ mysql> describe TB_CMM_CD
 		  a.MBR_ID as memberId
 		 ,a.MBR_EMLADDR as email
 		 ,a.MBR_NM as name
-		 ,a.MBR_GNDR as genderId
-		 , (SELECT b.CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR=b.CD_ID AND b.GRP_VAL='06') as genderNm
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
 		 ,a.BRTH_DAY as birthday
 		 ,a.HEIGHT as height
-		 ,NULL as password
+		 ,a.PASSWORD as password
 		 ,a.USE_YN as useYn
 		 ,a.REG_DT as regDt
 		 ,a.UDP_DT as udpDt

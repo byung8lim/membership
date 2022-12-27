@@ -14,7 +14,7 @@ public interface MemberMapper {
 	int modifyMemberAuth(MemberAuth memberAuth) throws SQLException;
 	Member findMemberByEmail(String email) throws SQLException;
 	Member findMemberByName(String name) throws SQLException;
-	Member findMemberById(int id) throws SQLException;
+	Member findMemberById(String id) throws SQLException;
 	List<Member> findMemberListByEmail(String email) throws SQLException;
 	List<Member> findMemberListByName(String name) throws SQLException;
 	List<Member> findMemberList() throws SQLException;

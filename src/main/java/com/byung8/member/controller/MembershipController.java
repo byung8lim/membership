@@ -173,7 +173,7 @@ public class MembershipController {
 	}
 
 	@RequestMapping(value = "/member/{id}/id", method = RequestMethod.GET)
-	public ResponseEntity<String> findMemberById(@PathVariable("id") final int id) {
+	public ResponseEntity<String> findMemberById(@PathVariable("id") final String id) {
 
 		String txid = txId();
 		try {

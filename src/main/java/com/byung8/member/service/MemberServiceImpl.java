@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Result findMemberById(int id, String txid) throws Byung8Exception {
+	public Result findMemberById(String id, String txid) throws Byung8Exception {
 		Result result = null;
 		try {
 			Member member = memberMapper.findMemberById(id);

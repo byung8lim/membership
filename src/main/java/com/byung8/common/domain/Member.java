@@ -12,24 +12,24 @@ import lombok.NoArgsConstructor;
 public class Member {
 
 /*
-CREATE TABLE TB_FS_MEMBER (
-  MBR_ID INT NOT NULL AUTO_INCREMENT
-, MBR_EMLADDR VARCHAR(50) NOT NULL
-, MBR_NM VARCHAR(50) NOT NULL
-, MBR_GNDR CHAR(1) NOT NULL
-, BRTH_DAY VARCHAR(8)
-, HEIGHT FLOAT
-, USE_YN CHAR(1) DEFAULT 'Y'
-, REG_DT DATETIME DEFAULT CURRENT_TIMESTAMP
-, UDP_DT DATETIME DEFAULT NULL
-, PRIMARY KEY(MBR_ID)
-, UNIQUE KEY(MBR_EMLADDR)
-);
+		SELECT
+		  a.MBR_ID as memberId
+		 ,a.MBR_EMLADDR as email
+		 ,a.MBR_NM as name
+		 ,a.MBR_GNDR_ID as genderId
+		 , (SELECT b.CMM_CD_NM FROM TB_CMM_CD b WHERE a.MBR_GNDR_ID=b.CMM_CD_ID AND b.GRP_CD='06') as genderNm
+		 ,a.BRTH_DAY as birthday
+		 ,a.HEIGHT as height
+		 ,a.PASSWORD as password
+		 ,a.USE_YN as useYn
+		 ,a.REG_DT as regDt
+		 ,a.UDP_DT as udpDt
+		FROM TB_FS_MEMBER a;
 */
-	private int memberId;
+	private String memberId;
 	private String email;
 	private String name;
-	private int genderId;
+	private String genderId;
 	private String genderNm;
 	private String birthday;
 	private float height;
