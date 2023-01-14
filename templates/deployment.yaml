@@ -18,7 +18,7 @@ spec:
         app: membership
     spec:
       containers:
-      - image: harbor.wbl.com/fitness/membership:BLDID20230101-000000
+      - image: harbor.wbl.com/fitness/membership:BLDID230101-000000
         name: membership
         volumeMounts:
         - mountPath: /etc/localtime
